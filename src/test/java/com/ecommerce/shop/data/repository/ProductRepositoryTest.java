@@ -9,11 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Slf4j
@@ -52,5 +50,19 @@ class ProductRepositoryTest {
         List<Product> products = productRepositoryImpl.findAll();
         assertThat(products).hasSize(4);
         log.info("Product list after find all -> {}", products);
+    }
+
+    @Test
+    public void deleteExistingProductById(){
+        assertThat(productRepositoryImpl.findById(110L).orElse(null)).isNotNull();
+        productRepositoryImpl.deleteById(110L);
+        assertThat(productRepositoryImpl.findById(110L).orElse(null)).isNull();
+    }
+
+    @Test
+    public void findExistingProductById(){
+        Product existingProduct = productRepositoryImpl.findById(110L).orElse(null);
+        assertThat(existingProduct).isNotNull();
+        log.info("existing product -> {}", existingProduct);
     }
 }
