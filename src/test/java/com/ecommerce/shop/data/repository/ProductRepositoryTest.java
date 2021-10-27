@@ -65,4 +65,16 @@ class ProductRepositoryTest {
         assertThat(existingProduct).isNotNull();
         log.info("existing product -> {}", existingProduct);
     }
+
+    @Test
+    public void test_updateProduct(){
+        Product product = productRepositoryImpl.findById(110L).orElse(null);
+        assertThat(product).isNotNull();
+        log.info("product -> {}", product);
+
+        product.setDetails("New Details set");
+        productRepositoryImpl.save(product);
+        log.info("product with details set -> {}", product);
+        assertThat(product.getDetails()).isEqualTo("New Details set");
+    }
 }

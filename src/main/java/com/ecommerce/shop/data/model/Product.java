@@ -1,6 +1,7 @@
 package com.ecommerce.shop.data.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.ToString;
 
