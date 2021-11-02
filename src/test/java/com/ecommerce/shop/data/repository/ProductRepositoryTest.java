@@ -20,17 +20,17 @@ class ProductRepositoryTest {
     private ProductRepository productRepositoryImpl;
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
 
     }
 
     @Autowired
-    ProductRepositoryTest(ProductRepository productRepositoryImpl){
+    ProductRepositoryTest(ProductRepository productRepositoryImpl) {
         this.productRepositoryImpl = productRepositoryImpl;
     }
 
     @Test
-    public void createProductTest(){
+    public void createProductTest() {
         Product product = new Product();
         product.setName("Luxury Sofa");
         product.setPrice(400D);
@@ -46,28 +46,28 @@ class ProductRepositoryTest {
     }
 
     @Test
-    public void whenFindAllProductIsCalledThenProductListIsReturnedTest(){
+    public void whenFindAllProductIsCalledThenProductListIsReturnedTest() {
         List<Product> products = productRepositoryImpl.findAll();
         assertThat(products).hasSize(4);
         log.info("Product list after find all -> {}", products);
     }
 
     @Test
-    public void deleteExistingProductById(){
+    public void deleteExistingProductById() {
         assertThat(productRepositoryImpl.findById(110L).orElse(null)).isNotNull();
         productRepositoryImpl.deleteById(110L);
         assertThat(productRepositoryImpl.findById(110L).orElse(null)).isNull();
     }
 
     @Test
-    public void findExistingProductById(){
+    public void findExistingProductById() {
         Product existingProduct = productRepositoryImpl.findById(110L).orElse(null);
         assertThat(existingProduct).isNotNull();
         log.info("existing product -> {}", existingProduct);
     }
 
     @Test
-    public void test_updateProduct(){
+    public void test_updateProduct() {
         Product product = productRepositoryImpl.findById(110L).orElse(null);
         assertThat(product).isNotNull();
         log.info("product -> {}", product);

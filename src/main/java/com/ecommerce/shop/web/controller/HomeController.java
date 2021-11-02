@@ -19,42 +19,42 @@ public class HomeController {
     ProductService productService;
 
     @Autowired
-    public HomeController(ProductService productService){
+    public HomeController(ProductService productService) {
         this.productService = productService;
     }
-    @GetMapping(value = {"/","/index"})
-    public String getIndex(Model model){
+
+    @GetMapping(value = {"/", "/index"})
+    public String getIndex(Model model) {
         List<Product> productList = productService.findAll();
         model.addAttribute("products", productList);
         return "indexPage";
     }
 
     @GetMapping("/about")
-    public String getAbout(){
+    public String getAbout() {
         return "about";
     }
 
     @GetMapping("/contact")
-    public String getContact(){
+    public String getContact() {
         return "contact";
     }
 
     @GetMapping("/single/{id}")
     public ModelAndView getProductById(@PathVariable Long id) throws ProductDoesNotExistException {
-        try{
+        try {
             ModelAndView modelAndView = new ModelAndView("productDetails");
             Product product = productService.findProductById(id);
             log.info("product --> {} ", product);
             modelAndView.addObject("product", product);
             return modelAndView;
-        }
-        catch (ProductDoesNotExistException ex){
+        } catch (ProductDoesNotExistException ex) {
             return new ModelAndView("errorPage");
         }
     }
 
     @GetMapping("/services")
-    public String getServices(){
+    public String getServices() {
         return "services";
     }
 

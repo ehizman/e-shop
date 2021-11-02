@@ -10,8 +10,11 @@ import java.util.List;
 @Service
 public interface ProductService {
     Product save(Product product);
+
     List<Product> findAll();
+
     Product findProductById(Long id) throws ProductDoesNotExistException;
+
     void deleteProductById(Long id);
 
     void updateProduct(Long id, ProductDto productForm) throws ProductDoesNotExistException;

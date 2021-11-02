@@ -11,25 +11,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Slf4j
 @NoArgsConstructor
-public class ProductServiceImpl implements ProductService{
+public class ProductServiceImpl implements ProductService {
     private ProductRepository productRepository;
 
     private ProductMapper productMapper;
 
     @Autowired
-    public ProductServiceImpl(ProductRepository productRepository, ProductMapper productMapper){
+    public ProductServiceImpl(ProductRepository productRepository, ProductMapper productMapper) {
         this.productRepository = productRepository;
         this.productMapper = productMapper;
     }
 
     @Override
     public Product save(Product product) {
-            return productRepository.save(product);
+        return productRepository.save(product);
     }
 
     @Override
@@ -40,7 +39,7 @@ public class ProductServiceImpl implements ProductService{
     @Override
     public Product findProductById(Long id) throws ProductDoesNotExistException {
         Product product = productRepository.findById(id).orElse(null);
-        if (product == null){
+        if (product == null) {
             throw new ProductDoesNotExistException(String.format("Product with %d does not exist", id));
         }
         return product;
@@ -52,19 +51,18 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public void updateProduct(Long id, ProductDto productForm) throws ProductDoesNotExistException {
-        if (productForm == null){
+        if (productForm == null) {
             throw new NullPointerException("Product Dto cannot be null");
         }
         Product product = productRepository.findById(id).orElse(null);
         log.info("product -> {}", product);
-        if (product != null){
+        if (product != null) {
             productMapper.mapDtoToProduct(productForm, product);
             product.setName(productForm.getName());
             product.setDetails(productForm.getDetails());
             log.info("prod-->{}", product);
             productRepository.save(product);
-        }
-        else{
+        } else {
             throw new NullPointerException();
         }
     }

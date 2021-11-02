@@ -8,7 +8,6 @@ import com.ecommerce.shop.service.exceptions.ProductDoesNotExistException;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -29,8 +28,9 @@ public class ProductServiceImplTestConcrete {
     @BeforeEach
     void setUp() {
     }
+
     @Test
-    void testProductUpdate(){
+    void testProductUpdate() {
         Product dummyProduct = new Product();
         dummyProduct.setId(110L);
         dummyProduct.setName("Dummy Product");
@@ -47,8 +47,7 @@ public class ProductServiceImplTestConcrete {
             assertThat(product.getName()).isEqualTo("Mexican Chair By Ehizman");
             assertThat(product.getDetails()).isEqualTo("designed and produced by ehizman");
             assertThat(product.getCurrency()).isEqualTo(Currency.NGN);
-        }
-        catch(ProductDoesNotExistException ex){
+        } catch (ProductDoesNotExistException ex) {
             log.info("Exception occurred --> {}", ex.getMessage());
         }
     }

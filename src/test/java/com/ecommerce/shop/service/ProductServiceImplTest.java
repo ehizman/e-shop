@@ -20,12 +20,15 @@ import static org.mockito.Mockito.*;
 
 @Sql(scripts = {"/db/insert.sql"})
 @Slf4j
-class ProductServiceImplTest {
+class
+
+ProductServiceImplTest {
     @Mock
     ProductRepository productRepository;
 
     @InjectMocks
     ProductService productServiceImpl;
+
     @BeforeEach
     void setUp() {
         productServiceImpl = new ProductServiceImpl();
@@ -37,29 +40,29 @@ class ProductServiceImplTest {
     }
 
     @Test
-    void saveProductMockTest(){
+    void saveProductMockTest() {
         Product product = new Product();
         //when
         when(productRepository.save(new Product())).thenReturn(product);
         productServiceImpl.save(product);
         verify(productRepository, times(1)).save(product);
     }
+
     @Test
-    void findProductByIdTest(){
+    void findProductByIdTest() {
         //given
         Product dummyProduct = new Product();
         dummyProduct.setId(120L);
         dummyProduct.setName("Dummy product");
         //when
         when(productRepository.findById(120L)).thenReturn(Optional.of(dummyProduct));
-        try{
+        try {
             Product product = productServiceImpl.findProductById(120L);
             verify(productRepository, times(1)).findById(120L);
             assertThat(product.getId()).isEqualTo(120L);
             assertThat(product.getName()).isEqualTo("Dummy product");
             assertThat(product).isNotNull();
-        }
-        catch (ProductDoesNotExistException ex){
+        } catch (ProductDoesNotExistException ex) {
             log.info("exception occurred -> {}", ex.getMessage());
         }
     }
